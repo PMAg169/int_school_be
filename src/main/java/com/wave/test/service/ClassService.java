@@ -3,7 +3,9 @@ package com.wave.test.service;
 import com.wave.test.model.Response;
 import com.wave.test.model.request.NewClass;
 import com.wave.test.model.tables.LoginSession;
+import com.wave.test.model.tables.TeachingClass;
 import com.wave.test.repository.TeachingClassRepo;
+import com.wave.test.utils.Utils;
 import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +29,13 @@ public class ClassService {
     public Response add(LoginSession session, NewClass request) {
         Response response = new Response();
         try {
+            TeachingClass teachingClass = new TeachingClass();
+            teachingClass.setClassName(request.getClassName());
+            teachingClass.setCreatedBy(session.getUser().getEmail());
+            teachingClass.setCreatedOn(Utils.getDateTime());
+            teachingClass = this.teachingClassRepo.save(teachingClass);
 
+            response.setStatus(Utils.success);
         } catch (Exception e) {
             response.setMessage("INTERNAL SERVER ERROR");
         }

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wave.test.model.request.Login;
 import com.wave.test.model.tables.LoginSession;
+import com.wave.test.model.tables.TeachingClass;
 import com.wave.test.model.tables.User;
 import org.apache.juli.logging.Log;
 import org.hibernate.Session;
@@ -47,6 +48,13 @@ public class Mapper {
         jsonObject.addProperty("id", user.getId());
         jsonObject.addProperty("email", user.getEmail());
         jsonObject.addProperty("type", user.getType());
+        return jsonObject;
+    }
+
+    public static JsonObject teachingClass(TeachingClass teachingClass) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", teachingClass.getId());
+        
         return jsonObject;
     }
 
