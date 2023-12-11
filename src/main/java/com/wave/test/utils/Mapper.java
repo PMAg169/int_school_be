@@ -2,8 +2,11 @@ package com.wave.test.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.wave.test.model.request.Login;
 import com.wave.test.model.tables.LoginSession;
 import com.wave.test.model.tables.User;
+import org.apache.juli.logging.Log;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -14,6 +17,22 @@ import java.util.List;
  * */
 
 public class Mapper {
+
+    public static JsonArray sessionList(List<LoginSession> sessions) {
+        JsonArray jsonArray = new JsonArray();
+        for(LoginSession session : sessions) {
+            jsonArray.add(session(session));
+        }
+        return jsonArray;
+    }
+
+    public static JsonArray userList(List<User> userList) {
+        JsonArray jsonArray = new JsonArray();
+        for(User user : userList) {
+            jsonArray.add(user(user));
+        }
+        return jsonArray;
+    }
 
     public static JsonObject session(LoginSession session) {
         JsonObject jsonObject = new JsonObject();
@@ -30,6 +49,6 @@ public class Mapper {
         jsonObject.addProperty("type", user.getType());
         return jsonObject;
     }
- 
+
 }
 

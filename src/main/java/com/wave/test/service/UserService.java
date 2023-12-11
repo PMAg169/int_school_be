@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.cert.CertSelector;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -40,7 +42,23 @@ public class UserService {
     @Value("${config.usertype.student.external}")
     private String configStudentExternal;
 
-    public Response register(Register request) {
+    public Response list(LoginSession session) {
+        Response response = new Response();
+        try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Only teachers can access this feature");
+                return response;
+            }
+            List<User> userList = this.userRepo.findAll();
+            response.setData(Mapper.userList(userList));
+            response.setStatus(Utils.success);
+        } catch (Exception e) {
+            response.setMessage("INTERNAL SERVER ERROR");
+        }
+        return response;
+    }
+
+    public Response register(LoginSession session, Register request) {
         Response response = new Response();
         try {
             if(request.getEmail() == null || request.getPassword() == null || request.getType() == null) {
@@ -118,7 +136,10 @@ public class UserService {
     public Response logout(LoginSession session) {
         Response response = new Response();
         try {
-
+            session.setActive(false);
+            session.setLogoutTime(Utils.getDateTime());
+            session = this.loginSessionRepo.save(session);
+            response.setStatus(Utils.success);
         } catch (Exception e) {
             response.setMessage("INTERNAL SERVER ERROR");
         }

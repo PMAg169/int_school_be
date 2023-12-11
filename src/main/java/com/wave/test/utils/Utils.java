@@ -28,6 +28,12 @@ public class Utils {
         return password;
     }
 
+    public static ResponseEntity<?> noAuthReaponse(Logger log) {
+        Response response = new Response();
+        response.setMessage("Invalid Authentication");
+        return response(response, log);
+    }
+
     public static ResponseEntity<?> response(Response response, Logger log) {
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.add("Author", "PHONE MYINT AUNG");
