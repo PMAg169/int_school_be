@@ -35,6 +35,10 @@ public class SubjectService {
     public Response add(LoginSession session, NewSubject request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             if(request.getSubject() == null || request.getSubject().isEmpty()) {
                 response.setMessage("Subject cannot be blank");
                 return response;
@@ -56,6 +60,10 @@ public class SubjectService {
     public Response edit(LoginSession session, NewSubject request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<Subject> subjectOptional = this.subjectRepo.findById(request.getId());
 
             if(!subjectOptional.isPresent()) {

@@ -36,6 +36,10 @@ public class ClassService {
     public Response add(LoginSession session, NewClass request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             if(request.getClassName() == null || request.getClassName().isEmpty()) {
                 response.setMessage("Class Name cannot be empty");
                 return response;
@@ -56,6 +60,10 @@ public class ClassService {
     public Response edit(LoginSession session, NewClass request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<TeachingClass> teachingClassOptional = this.teachingClassRepo.findById(request.getId());
             if(!teachingClassOptional.isPresent()) {
                 response.setMessage("Class not found");

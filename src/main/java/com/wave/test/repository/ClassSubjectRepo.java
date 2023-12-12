@@ -17,4 +17,8 @@ import java.util.List;
 public interface ClassSubjectRepo extends JpaRepository<ClassSubject, Long> {
     @Query(value = "select * from class_subject where class_id = :classId and subject_id = :subjectId", nativeQuery = true)
     List<ClassSubject> getByClassAndSubject(@Param("classId") Long classId, @Param("subjectId") Long subjectId);
+
+    @Query(value = "select * from class_subject where class_id = :classId", nativeQuery = true)
+    List<ClassSubject> getByClass(@Param("classId") Long classId);
+
 }

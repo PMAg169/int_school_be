@@ -2648,3 +2648,50 @@ java.lang.NullPointerException: Cannot invoke "Object.toString()" because the re
 2023-12-12T14:22:40.278+06:30  INFO 13948 --- [http-nio-9000-exec-8] com.wave.test.service.AuthService        : Authenticating login data
 2023-12-12T14:22:40.280+06:30  INFO 13948 --- [http-nio-9000-exec-8] com.wave.test.service.AuthService        : Login info valid
 2023-12-12T14:22:40.281+06:30  INFO 13948 --- [http-nio-9000-exec-8] c.w.test.controller.SubjectController    : Response: {"status":"FAIL","message":"Subject not found","data":""}
+2023-12-12T14:35:59.093+06:30  INFO 13948 --- [http-nio-9000-exec-10] c.wave.test.controller.UserController    : Response: {"status":"SUCCESS","message":null,"data":"{\"session\":\"TiR8L9WzCf9HJewPRiEw\",\"loginTime\":\"2023-12-12 14:35:59\",\"user\":{\"id\":1,\"email\":\"phonemyintaung@pma.com\",\"type\":\"TEACHER\"}}"}
+2023-12-12T14:36:10.267+06:30  INFO 13948 --- [http-nio-9000-exec-2] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Invalid Credentials","data":""}
+2023-12-12T14:43:06.191+06:30  WARN 13948 --- [http-nio-9000-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity<?> com.wave.test.controller.UserController.register(com.wave.test.model.request.Register)]
+2023-12-12T14:43:31.110+06:30  INFO 13948 --- [http-nio-9000-exec-4] com.wave.test.service.AuthService        : Auth: null
+2023-12-12T14:43:31.111+06:30  INFO 13948 --- [http-nio-9000-exec-4] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Invalid Authentication","data":""}
+2023-12-12T14:43:44.002+06:30  INFO 13948 --- [http-nio-9000-exec-6] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:43:44.002+06:30  INFO 13948 --- [http-nio-9000-exec-6] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:43:44.004+06:30  INFO 13948 --- [http-nio-9000-exec-6] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:43:44.004+06:30  INFO 13948 --- [http-nio-9000-exec-6] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Invalid type in request body","data":""}
+2023-12-12T14:43:52.330+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:43:52.330+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:43:52.333+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:43:52.333+06:30  INFO 13948 --- [http-nio-9000-exec-9] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Password must be at least 5 chars","data":""}
+2023-12-12T14:43:57.624+06:30  INFO 13948 --- [http-nio-9000-exec-2] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:43:57.624+06:30  INFO 13948 --- [http-nio-9000-exec-2] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:43:57.625+06:30  INFO 13948 --- [http-nio-9000-exec-2] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:43:57.628+06:30  INFO 13948 --- [http-nio-9000-exec-2] c.wave.test.controller.UserController    : Response: {"status":"SUCCESS","message":null,"data":""}
+2023-12-12T14:43:58.701+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:43:58.701+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:43:58.702+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:43:58.703+06:30  INFO 13948 --- [http-nio-9000-exec-1] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Email already registered","data":""}
+2023-12-12T14:44:18.416+06:30  INFO 13948 --- [http-nio-9000-exec-5] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:44:18.417+06:30  INFO 13948 --- [http-nio-9000-exec-5] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:44:18.418+06:30  INFO 13948 --- [http-nio-9000-exec-5] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:44:18.418+06:30  INFO 13948 --- [http-nio-9000-exec-5] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Invalid type in request body","data":""}
+2023-12-12T14:44:35.005+06:30  INFO 13948 --- [http-nio-9000-exec-7] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:44:35.005+06:30  INFO 13948 --- [http-nio-9000-exec-7] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:44:35.007+06:30  INFO 13948 --- [http-nio-9000-exec-7] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:44:35.007+06:30  INFO 13948 --- [http-nio-9000-exec-7] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Password must be at least 5 chars","data":""}
+2023-12-12T14:44:49.619+06:30  INFO 13948 --- [http-nio-9000-exec-8] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:44:49.619+06:30  INFO 13948 --- [http-nio-9000-exec-8] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:44:49.621+06:30  INFO 13948 --- [http-nio-9000-exec-8] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:44:49.624+06:30  INFO 13948 --- [http-nio-9000-exec-8] c.wave.test.controller.UserController    : Response: {"status":"SUCCESS","message":null,"data":""}
+2023-12-12T14:45:01.903+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Auth: TiR8L9WzCf9HJewPRiEw
+2023-12-12T14:45:01.903+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:45:01.904+06:30  INFO 13948 --- [http-nio-9000-exec-9] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:45:01.905+06:30  INFO 13948 --- [http-nio-9000-exec-9] c.wave.test.controller.UserController    : Response: {"status":"FAIL","message":"Email already registered","data":""}
+2023-12-12T14:45:30.883+06:30  INFO 13948 --- [http-nio-9000-exec-10] c.wave.test.controller.UserController    : Response: {"status":"SUCCESS","message":null,"data":"{\"session\":\"xaThlMNiAHgZQujNt3E2\",\"loginTime\":\"2023-12-12 14:45:30\",\"user\":{\"id\":3,\"email\":\"testuser@gmail.com\",\"type\":\"STUDENT_INTERNAL\"}}"}
+2023-12-12T14:45:41.687+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Auth: xaThlMNiAHgZQujNt3E2
+2023-12-12T14:45:41.688+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:45:41.689+06:30  INFO 13948 --- [http-nio-9000-exec-1] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:45:41.691+06:30  INFO 13948 --- [http-nio-9000-exec-1] c.w.test.controller.SubjectController    : Response: {"status":"SUCCESS","message":null,"data":""}
+2023-12-12T14:45:46.223+06:30  INFO 13948 --- [http-nio-9000-exec-3] com.wave.test.service.AuthService        : Auth: xaThlMNiAHgZQujNt3E2
+2023-12-12T14:45:46.223+06:30  INFO 13948 --- [http-nio-9000-exec-3] com.wave.test.service.AuthService        : Authenticating login data
+2023-12-12T14:45:46.225+06:30  INFO 13948 --- [http-nio-9000-exec-3] com.wave.test.service.AuthService        : Login info valid
+2023-12-12T14:45:46.226+06:30  INFO 13948 --- [http-nio-9000-exec-3] c.w.test.controller.SubjectController    : Response: {"status":"SUCCESS","message":null,"data":"{\"id\":1,\"subjectName\":\"Maths\"}"}
+2023-12-12T15:21:46.998+06:30  WARN 13948 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m16s789ms915µs400ns).

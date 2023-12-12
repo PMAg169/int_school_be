@@ -7,6 +7,7 @@ import com.wave.test.model.request.AssignUser;
 import com.wave.test.model.request.Login;
 import com.wave.test.model.tables.*;
 import com.wave.test.repository.*;
+import com.wave.test.utils.Mapper;
 import com.wave.test.utils.Utils;
 import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
@@ -47,10 +48,13 @@ public class AssignToClassService {
     @Value("${config.usertype.teacher}")
     private String configTeacher;
 
-    public Response classSubjectList(Long id) {
+    public Response classSubject(LoginSession session, Long id) {
         Response response = new Response();
         try {
-
+            List<ClassSubject> classSubjectList = this.classSubjectRepo.getByClass(id);
+            boolean showDetail = (session != null) && (session.getUser().getType().equals(this.configTeacher));
+            response.setData(Mapper.classSubjectList(classSubjectList, showDetail));
+            response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
@@ -58,10 +62,13 @@ public class AssignToClassService {
         return response;
     }
 
-    public Response classUserList() {
+    public Response classUser(LoginSession session, Long id) {
         Response response = new Response();
         try {
-
+            List<ClassUser> classUserList = this.classUserRepo.getByClass(id);
+            boolean showDetail = (session != null) && (session.getUser().getType().equals(this.configTeacher));
+            response.setData(Mapper.classUserList(classUserList, showDetail));
+            response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
@@ -72,6 +79,10 @@ public class AssignToClassService {
     public Response addSubject(LoginSession session, AssignSubject request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<TeachingClass> teachingClassOptional = this.teachingClassRepo.findById(request.getClassId());
             if(!teachingClassOptional.isPresent()) {
                 response.setMessage("Class not found");
@@ -106,6 +117,10 @@ public class AssignToClassService {
     public Response addUser(LoginSession session, AssignUser request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<TeachingClass> teachingClassOptional = this.teachingClassRepo.findById(request.getClassId());
             if(!teachingClassOptional.isPresent()) {
                 response.setMessage("Class not found");
@@ -140,6 +155,10 @@ public class AssignToClassService {
     public Response removeSubject(LoginSession session, Long id) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<ClassSubject> classSubjectOptional = this.classSubjectRepo.findById(id);
             if(!classSubjectOptional.isPresent()) {
                 response.setMessage("Subject not found in class");
@@ -158,6 +177,10 @@ public class AssignToClassService {
     public Response removeUser(LoginSession session, Long id) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             Optional<ClassUser> classUserOptional = this.classUserRepo.findById(id);
             if(!classUserOptional.isPresent()) {
                 response.setMessage("User not found in class");

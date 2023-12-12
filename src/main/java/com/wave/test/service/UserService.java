@@ -61,6 +61,10 @@ public class UserService {
     public Response register(LoginSession session, Register request) {
         Response response = new Response();
         try {
+            if(!session.getUser().getType().equals(this.configTeacher)) {
+                response.setMessage("Permission not allowed");
+                return response;
+            }
             if(request.getEmail() == null || request.getPassword() == null || request.getType() == null) {
                 response.setMessage("Null value detected");
                 return response;
@@ -86,6 +90,7 @@ public class UserService {
             user = this.userRepo.save(user);
             response.setStatus(Utils.success);
         } catch (Exception e) {
+            log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
         }
         return response;
@@ -128,6 +133,7 @@ public class UserService {
             response.setData(Mapper.session(newSession));
             response.setStatus(Utils.success);
         } catch (Exception e) {
+            log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
         }
         return response;
@@ -141,6 +147,18 @@ public class UserService {
             session = this.loginSessionRepo.save(session);
             response.setStatus(Utils.success);
         } catch (Exception e) {
+            log.error(e.toString());
+            response.setMessage("INTERNAL SERVER ERROR");
+        }
+        return response;
+    }
+
+    public Response profile(LoginSession session) {
+        Response response = new Response();
+        try {
+
+        } catch (Exception e) {
+            log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
         }
         return response;

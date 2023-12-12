@@ -35,3 +35,4 @@ data/wave_hackathon.mv.db
 data/wave_hackathon.trace.db
 *.db
 *.db
+logs/phonemyintaung.log
