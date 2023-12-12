@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * author: PHONE MYINT AUNG
+ * contact: +959963213600
+ * email: yahiko169@gmail.com
+ * */
+
 @Controller
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -34,8 +40,6 @@ public class UserController {
 
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<?> login(@RequestBody() Login request) {
-        LoginSession session = this.authService.authenticate();
-        if(session == null) return Utils.noAuthReaponse(log);
         return Utils.response(this.userService.login(request), log);
     }
 

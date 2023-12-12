@@ -38,9 +38,10 @@ public class Utils {
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.add("Author", "PHONE MYINT AUNG");
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        if(response.getStatus().equals(status)) {
+        if(response.getStatus().equals(success)) {
             status = HttpStatus.OK;
         }
+        log.info("Response: " + Mapper.response(response));
         return new ResponseEntity<>(response, responseHeader, status);
     }
 

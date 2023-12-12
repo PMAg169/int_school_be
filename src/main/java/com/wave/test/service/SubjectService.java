@@ -2,9 +2,10 @@ package com.wave.test.service;
 
 import com.wave.test.model.Response;
 import com.wave.test.model.request.NewClass;
+import com.wave.test.model.request.NewSubject;
 import com.wave.test.model.tables.LoginSession;
-import com.wave.test.model.tables.TeachingClass;
-import com.wave.test.repository.TeachingClassRepo;
+import com.wave.test.model.tables.Subject;
+import com.wave.test.repository.SubjectRepo;
 import com.wave.test.utils.Mapper;
 import com.wave.test.utils.Utils;
 import org.apache.juli.logging.Log;
@@ -14,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * author: PHONE MYINT AUNG
@@ -24,28 +23,29 @@ import java.util.ResourceBundle;
  * email: yahiko169@gmail.com
  * */
 @Service
-public class ClassService {
-    private static final Logger log = LoggerFactory.getLogger(ClassService.class);
+public class SubjectService {
+    private static final Logger log = LoggerFactory.getLogger(SubjectService.class);
 
     @Autowired
-    private TeachingClassRepo teachingClassRepo;
+    private SubjectRepo subjectRepo;
 
     @Value("${config.usertype.teacher}")
     private String configTeacher;
 
-    public Response add(LoginSession session, NewClass request) {
+    public Response add(LoginSession session, NewSubject request) {
         Response response = new Response();
         try {
-            if(request.getClassName() == null || request.getClassName().isEmpty()) {
-                response.setMessage("Class Name cannot be empty");
+            if(request.getSubject() == null || request.getSubject().isEmpty()) {
+                response.setMessage("Subject cannot be blank");
                 return response;
             }
-            TeachingClass teachingClass = new TeachingClass();
-            teachingClass.setClassName(request.getClassName());
-            teachingClass.setCreatedBy(session.getUser().getEmail());
-            teachingClass.setCreatedOn(Utils.getDateTime());
-            teachingClass = this.teachingClassRepo.save(teachingClass);
+            Subject subject = new Subject();
+            subject.setSubjectName(request.getSubject());
+            subject.setCreatedBy(session.getUser().getEmail());
+            subject.setCreatedOn(Utils.getDateTime());
+            subject = this.subjectRepo.save(subject);
             response.setStatus(Utils.success);
+            return response;
         } catch (Exception e) {
             log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");
@@ -53,23 +53,24 @@ public class ClassService {
         return response;
     }
 
-    public Response edit(LoginSession session, NewClass request) {
+    public Response edit(LoginSession session, NewSubject request) {
         Response response = new Response();
         try {
-            Optional<TeachingClass> teachingClassOptional = this.teachingClassRepo.findById(request.getId());
-            if(!teachingClassOptional.isPresent()) {
-                response.setMessage("Class not found");
+            Optional<Subject> subjectOptional = this.subjectRepo.findById(request.getId());
+
+            if(!subjectOptional.isPresent()) {
+                response.setMessage("Subject not found");
                 return response;
             }
-            if(request.getClassName() == null || request.getClassName().isEmpty()) {
-                response.setMessage("Class Name cannot be empty");
+            if(request.getSubject() == null || request.getSubject().isEmpty()) {
+                response.setMessage("Subject cannot be blank");
                 return response;
             }
-            TeachingClass teachingClass = teachingClassOptional.get();
-            teachingClass.setClassName(request.getClassName());
-            teachingClass.setUpdatedBy(session.getUser().getEmail());
-            teachingClass.setUpdatedOn(Utils.getDateTime());
-            teachingClass = this.teachingClassRepo.save(teachingClass);
+            Subject subject = subjectOptional.get();
+            subject.setSubjectName(request.getSubject());
+            subject.setUpdatedBy(session.getUser().getEmail());
+            subject.setUpdatedOn(Utils.getDateTime());
+            subject = this.subjectRepo.save(subject);
             response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
@@ -82,7 +83,7 @@ public class ClassService {
         Response response = new Response();
         try {
             boolean showDetail = (session != null) && (session.getUser().getType().equals(this.configTeacher));
-            response.setData(Mapper.teachingClassList(this.teachingClassRepo.findAll(), showDetail));
+            response.setData(Mapper.subjectList(this.subjectRepo.findAll(),showDetail));
             response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
@@ -94,13 +95,13 @@ public class ClassService {
     public Response search(LoginSession session, Long id) {
         Response response = new Response();
         try {
-            Optional<TeachingClass> teachingClassOptional = this.teachingClassRepo.findById(id);
-            if(!teachingClassOptional.isPresent()) {
-                response.setMessage("Class not found");
+            Optional<Subject> subjectOptional = this.subjectRepo.findById(id);
+            if(!subjectOptional.isPresent()) {
+                response.setMessage("Subject not found");
                 return response;
             }
             boolean showDetail = (session != null) && (session.getUser().getType().equals(this.configTeacher));
-            response.setData(Mapper.teachingClass(teachingClassOptional.get(), showDetail));
+            response.setData(Mapper.subject(subjectOptional.get(), showDetail));
             response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
@@ -108,4 +109,5 @@ public class ClassService {
         }
         return response;
     }
+
 }

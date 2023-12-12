@@ -1,5 +1,7 @@
 package com.wave.test.model.request;
 
+import org.springframework.lang.NonNull;
+
 /**
  * author: PHONE MYINT AUNG
  * contact: +959963213600

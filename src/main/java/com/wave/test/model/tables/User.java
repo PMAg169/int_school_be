@@ -8,7 +8,7 @@ import jakarta.persistence.*;
  * email: yahiko169@gmail.com
  * */
 
-@Entity
+@Entity(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "user_type")
     private String type;
 
     public Long getId() {

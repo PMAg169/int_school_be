@@ -18,9 +18,9 @@ import java.util.List;
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT u FROM User where u.email = :email")
+    @Query(value = "SELECT * FROM app_user u where u.email = :email", nativeQuery = true)
     User getByEmail(@Param("email") String email);
 
-    @Query(value = "SELECT u FROM User where u.type = :type")
+    @Query(value = "SELECT * FROM app_user u where u.user_type = :type", nativeQuery = true)
     List<User> getByType(@Param("type") String type);
 }

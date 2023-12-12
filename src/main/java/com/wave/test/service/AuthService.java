@@ -37,6 +37,9 @@ public class AuthService {
                 if(loginSession.isPresent()) {
                     log.info("Login info valid");
                     session = loginSession.get();
+                    if(!session.isActive()) {
+                        session = null;
+                    }
                 }
             }
         } catch (Exception e) {
