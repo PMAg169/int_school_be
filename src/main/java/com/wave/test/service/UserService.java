@@ -1,5 +1,6 @@
 package com.wave.test.service;
 
+import com.google.gson.JsonObject;
 import com.wave.test.model.Response;
 import com.wave.test.model.request.Login;
 import com.wave.test.model.request.Register;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.security.cert.CertSelector;
@@ -156,7 +158,48 @@ public class UserService {
     public Response profile(LoginSession session) {
         Response response = new Response();
         try {
+            response.setData(Mapper.session(session));
+            response.setStatus(Utils.success);
+        } catch (Exception e) {
+            log.error(e.toString());
+            response.setMessage("INTERNAL SERVER ERROR");
+        }
+        return response;
+    }
 
+    public Response activeLogin(LoginSession session) {
+        Response response = new Response();
+        try {
+            List<LoginSession> loginSessions = this.loginSessionRepo.findByStatus(session.getUser().getId(), true);
+            response.setData(Mapper.sessionList(loginSessions));
+            response.setStatus(Utils.success);
+        } catch (Exception e) {
+            log.error(e.toString());
+            response.setMessage("INTERNAL SERVER ERROR");
+        }
+        return response;
+    }
+
+    public Response endLogin(LoginSession session, String key) {
+        Response response = new Response();
+        try {
+            Optional<LoginSession> loginSessionOptional = this.loginSessionRepo.findById(key);
+            if(!loginSessionOptional.isPresent()) {
+                response.setMessage("Session not found");
+                return response;
+            }
+            LoginSession targetSession = loginSessionOptional.get();
+            if(targetSession.getUser().getId() != session.getUser().getId()) {
+                response.setMessage("Target session invalid");
+                return response;
+            }
+            if(!targetSession.isActive()) {
+                response.setMessage("Session has already been terminated");
+                return response;
+            }
+            targetSession.setActive(false);
+            targetSession= this.loginSessionRepo.save(targetSession);
+            response.setStatus(Utils.success);
         } catch (Exception e) {
             log.error(e.toString());
             response.setMessage("INTERNAL SERVER ERROR");

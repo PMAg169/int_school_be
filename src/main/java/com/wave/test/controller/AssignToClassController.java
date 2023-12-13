@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * */
 
 @Controller
-@RestController("/assign")
+@RequestMapping("/assign")
 public class AssignToClassController {
     private static final Logger log = LoggerFactory.getLogger(AssignToClassController.class);
 
@@ -44,13 +44,13 @@ public class AssignToClassController {
     }
 
     @PostMapping(value = "/user", produces = "application/json")
-    public ResponseEntity<?> addUser(@RequestBody()AssignUser request) {
+    public ResponseEntity<?> addUser(@RequestBody() AssignUser request) {
         LoginSession session = this.authService.authenticate();
         if(session == null) return Utils.noAuthReaponse(log);
         return Utils.response(this.assignToClassService.addUser(session, request),log);
     }
 
-    @PostMapping(value = "/user", produces = "application/json")
+    @PostMapping(value = "/subject", produces = "application/json")
     public ResponseEntity<?> addSubject(@RequestBody() AssignSubject request) {
         LoginSession session = this.authService.authenticate();
         if(session == null) return Utils.noAuthReaponse(log);

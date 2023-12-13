@@ -1,15 +1,21 @@
 package com.wave.test.service;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.JsonObject;
 import com.wave.test.model.tables.*;
 import com.wave.test.repository.*;
 import com.wave.test.utils.Mapper;
 import com.wave.test.utils.Utils;
 import jdk.jshell.execution.Util;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -41,6 +47,8 @@ public class InitiateService {
     @Value("${config.usertype.teacher}")
     private String configTeacher;
 
+    @Autowired
+    private RestTemplate restTemplate;
 
     public void initialize() {
         try {
@@ -111,17 +119,17 @@ public class InitiateService {
                 subject4.setCreatedOn(Utils.getDateTime());
                 subject4.setCreatedBy(teacher.getEmail());
                 subjectList.add(this.subjectRepo.save(subject4));
-            }
-            for(Subject sub : subjectList) {
-                log.info("Checking subject " + Mapper.subject(sub, true).toString());
-                if(this.classSubjectRepo.getByClassAndSubject(teachingClass.getId(), sub.getId()).size() == 0) {
-                    log.info("Subject not in class. Initiating saving process");
-                    ClassSubject classSubject = new ClassSubject();
-                    classSubject.setSubject(sub);
-                    classSubject.setTeachingClass(teachingClass);
-                    classSubject.setCreatedOn(Utils.getDateTime());
-                    classSubject.setCreatedBy(teacher.getEmail());
-                    classSubject = this.classSubjectRepo.save(classSubject);
+                for(Subject sub : subjectList) {
+                    log.info("Checking subject " + Mapper.subject(sub, true).toString());
+                    if(this.classSubjectRepo.getByClassAndSubject(teachingClass.getId(), sub.getId()).size() == 0) {
+                        log.info("Subject not in class. Initiating saving process");
+                        ClassSubject classSubject = new ClassSubject();
+                        classSubject.setSubject(sub);
+                        classSubject.setTeachingClass(teachingClass);
+                        classSubject.setCreatedOn(Utils.getDateTime());
+                        classSubject.setCreatedBy(teacher.getEmail());
+                        classSubject = this.classSubjectRepo.save(classSubject);
+                    }
                 }
             }
 
@@ -132,6 +140,22 @@ public class InitiateService {
     }
 
     public void syncExternalData() {
+        try {
+            ResponseEntity<String> response = this.restTemplate.getForEntity("http://getexternalstudent.com?fromSchool=phonemyintaung", String.class);
+            if(!response.getStatusCode().equals(200)) {
+                log.error("Error in syncing data");
+                return;
+            }
+
+            String body = response.getBody();
+            JSONArray jsonArray = new JSONArray(body);
+            for(int i=0; i<jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+            }
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
 
     }
 }

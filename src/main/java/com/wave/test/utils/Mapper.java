@@ -80,7 +80,9 @@ public class Mapper {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("session", session.getSession());;
         jsonObject.addProperty("loginTime", session.getLoginTime());
-        jsonObject.add("user", user(session.getUser()));
+        JsonObject userObj = user(session.getUser());
+        userObj.remove("id");
+        jsonObject.add("user", userObj);
         return jsonObject;
     }
 
@@ -124,7 +126,7 @@ public class Mapper {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", classUser.getId());
         jsonObject.add("user", user(classUser.getUser()));
-        jsonObject.add("class", teachingClass(classUser.getTeachingClass(), detail));
+//        jsonObject.add("class", teachingClass(classUser.getTeachingClass(), detail));
         if(detail) {
             jsonObject.addProperty("createdBy", classUser.getCreatedBy());
             jsonObject.addProperty("createdOn", classUser.getCreatedOn());
@@ -136,7 +138,7 @@ public class Mapper {
     public static JsonObject classSubject(ClassSubject classSubject, boolean detail) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", classSubject.getId());
-        jsonObject.add("class", teachingClass(classSubject.getTeachingClass(), detail));
+//        jsonObject.add("class", teachingClass(classSubject.getTeachingClass(), detail));
         jsonObject.add("subject", subject(classSubject.getSubject(), detail));
         if(detail) {
             jsonObject.addProperty("createdBy", classSubject.getCreatedBy());

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * author: PHONE MYINT AUNG
@@ -50,11 +51,32 @@ public class UserController {
         return Utils.response(this.userService.logout(session), log);
     }
 
-    @GetMapping(value = "/list", produces = "application/json")
+    @GetMapping(value = "/user/list", produces = "application/json")
     public ResponseEntity<?> list() {
         LoginSession session = this.authService.authenticate();
         if(session == null) return Utils.noAuthReaponse(log);
         return Utils.response(this.userService.list(session), log);
+    }
+
+    @GetMapping(value = "/profile", produces = "application/json")
+    public ResponseEntity<?> profile() {
+        LoginSession session = this.authService.authenticate();
+        if(session == null) return Utils.noAuthReaponse(log);
+        return Utils.response(this.userService.profile(session), log);
+    }
+
+    @GetMapping(value = "/activeLogin", produces = "application/json")
+    public ResponseEntity<?> activeLogin() {
+        LoginSession session = this.authService.authenticate();
+        if(session == null) return Utils.noAuthReaponse(log);
+        return Utils.response(this.userService.activeLogin(session), log);
+    }
+
+    @GetMapping(value = "/endLogin", produces = "application/json")
+    public ResponseEntity<?> endLogin(@RequestParam("id") String id) {
+        LoginSession session = this.authService.authenticate();
+        if(session == null) return Utils.noAuthReaponse(log);
+        return Utils.response(this.userService.endLogin(session, id), log);
     }
 
 }
