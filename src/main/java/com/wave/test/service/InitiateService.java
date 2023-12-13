@@ -151,7 +151,7 @@ public class InitiateService {
             JSONArray jsonArray = new JSONArray(body);
             for(int i=0; i<jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-
+                // Sync Logic
             }
         } catch (Exception e) {
             log.error(e.toString());

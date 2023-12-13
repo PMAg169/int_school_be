@@ -17,16 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class Config {
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*");
-            }
-        };
-    }
-
-    @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
